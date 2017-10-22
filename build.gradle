@@ -21,3 +21,21 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext{
+
+    minSdkVersion= 14
+    targetSdkVersion= 26
+    compileSdkVersion= 26
+    buildToolsVersion="26.0.2"
+    versionName= "1.0.0"
+    versionCode= 1
+    //Dependencies
+    supportLibraryVersion= "25.2.0"
+
+    var = [
+            SupportV7 : "com.android.support:appcompat-v7:$supportLibraryVersion",
+            SupportV4 : "com.android.support:support-v4:$supportLibraryVersion",
+            SupportRecyclerviewV7 : "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    ]
+}
