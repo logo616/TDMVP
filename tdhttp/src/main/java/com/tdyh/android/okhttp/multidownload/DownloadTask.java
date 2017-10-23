@@ -131,7 +131,6 @@ public class DownloadTask implements Runnable {
     @Override
     public void run() {
 
-        Log.e(TAG, "长度下载线程：" + Thread.currentThread().getName());
         try {
             mFileLength = mOkHttpLenStack.getContentLength(mPoint.getUrl());
         } catch (Exception e) {
@@ -245,8 +244,8 @@ public class DownloadTask implements Runnable {
         public void run() {
 
             try {
-                Log.e(TAG, threadId + "下载线程：" + Thread.currentThread().getName());
-                InputStream  is = mOkHttpStack.download(mPoint.getUrl(), finalStartIndex, endIndex);
+
+                InputStream is = mOkHttpStack.download(mPoint.getUrl(), finalStartIndex, endIndex);
 
                 if (is == null) {
                     resetStutus();
@@ -301,7 +300,7 @@ public class DownloadTask implements Runnable {
                 cleanFile(cacheFile);
                 //发送完成消息
                 mHandler.sendEmptyMessage(MSG_FINISH);
-                Log.e(TAG, "当前线程下载完毕:" + threadId);
+                Log.d(TAG, "当前线程下载完毕:" + threadId);
             } catch (Exception ex) {
                 saveToCacheAccessFile(mCurrentDownStartIndex);
                 Log.e(TAG, threadId + " 下载过程中 失败:" + ex.toString());
@@ -337,7 +336,7 @@ public class DownloadTask implements Runnable {
      * 删除临时文件
      */
     private void cleanFile(File... files) {
-        if (files!=null) {
+        if (files != null) {
             for (File file : files) {
                 if (null != file)
                     file.delete();

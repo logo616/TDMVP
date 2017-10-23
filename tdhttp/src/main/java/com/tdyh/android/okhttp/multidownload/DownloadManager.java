@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 下载管理器，断点续传
- *
  */
 public class DownloadManager {
 
@@ -16,6 +15,7 @@ public class DownloadManager {
     private Map<String, DownloadTask> mDownloadTasks;//文件下载任务索引，String为url,用来唯一区别并操作下载的文件
     private static DownloadManager mInstance;
     private static final String TAG = "DownloadManager";
+
     /**
      * 下载文件
      */
@@ -93,6 +93,7 @@ public class DownloadManager {
 
     /**
      * 默认下载目录
+     *
      * @return
      */
     private String getDefaultDirectory() {
@@ -103,11 +104,11 @@ public class DownloadManager {
         return DEFAULT_FILE_DIR;
     }
 
-    public void setDefaultDirectory(String defaultDir){
+    public void setDefaultDirectory(String defaultDir) {
         if (TextUtils.isEmpty(this.DEFAULT_FILE_DIR)) {
             this.DEFAULT_FILE_DIR = defaultDir;
-        }else {
-            Log.e(TAG,"DEFAULT_FILE_DIR has exit");
+        } else {
+            Log.e(TAG, "DEFAULT_FILE_DIR has exit");
         }
     }
 
