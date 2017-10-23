@@ -1,22 +1,23 @@
 package com.tdyh.android.okhttp.multidownload;
 
+import android.os.Process;
+import android.support.annotation.NonNull;
+
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 线程池管理
- * @author djcken
- * @date 2017/8/20
  */
 public class ThreadPoolManager {
 
     private static ThreadPoolManager mInstance = new ThreadPoolManager();
-    private final ExecutorService mExecutors;
+
     private ThreadPoolExecutor mExecutor;
 
     private int mCorePoolSize;
@@ -33,7 +34,6 @@ public class ThreadPoolManager {
     private ThreadPoolManager() {
         //calculate corePoolSize, which is the same to AsyncTask.
         mCorePoolSize = Runtime.getRuntime().availableProcessors() * 2 + 1;
-        mCorePoolSize=128;
         mMaximumPoolSize = mCorePoolSize;
         //we custom the threadpool.
         mExecutor = new ThreadPoolExecutor(
@@ -42,12 +42,12 @@ public class ThreadPoolManager {
                 mKeepAliveTime,
                 mUnit,
                 mWorkQueue,
-                Executors.defaultThreadFactory(),
+                new DownloadThreadFactory(),
                 mHandler
         );
-        mExecutors=  Executors.newCachedThreadPool();
 
     }
+
 
     public void setCorePoolSize(int size) {
         this.mCorePoolSize = size;
@@ -61,8 +61,7 @@ public class ThreadPoolManager {
      */
     public void execute(Runnable runnable) {
         if (runnable != null) {
-//            mExecutor.execute(runnable);
-            mExecutors.execute(runnable);
+            mExecutor.execute(runnable);
         }
     }
 
@@ -77,4 +76,18 @@ public class ThreadPoolManager {
         }
     }
 
+    private class DownloadThreadFactory implements ThreadFactory {
+        private final AtomicInteger threadNum = new AtomicInteger(0);
+
+        @Override
+        public Thread newThread(@NonNull final Runnable r) {
+            return new Thread("DownloadThreadFactory" + threadNum.incrementAndGet()) {
+                @Override
+                public void run() {
+                    Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+                    r.run();
+                }
+            };
+        }
+    }
 }

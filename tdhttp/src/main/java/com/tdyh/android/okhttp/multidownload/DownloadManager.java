@@ -3,8 +3,8 @@ package com.tdyh.android.okhttp.multidownload;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 下载管理器，断点续传
@@ -31,7 +31,7 @@ public class DownloadManager {
 
 
     // 获取下载文件的名称
-    public String getFileName(String url) {
+    private String getFileName(String url) {
         return url.substring(url.lastIndexOf("/") + 1);
     }
 
@@ -85,7 +85,10 @@ public class DownloadManager {
         if (TextUtils.isEmpty(fileName)) {
             fileName = getFileName(url);
         }
-        mDownloadTasks.put(url, new DownloadTask(new FilePoint(url, fileDir, fileName), l));
+        if (!mDownloadTasks.containsKey(url)) {
+            //防止重复添加
+            mDownloadTasks.put(url, new DownloadTask(new FilePoint(url, fileDir, fileName), l));
+        }
     }
 
     /**
@@ -120,7 +123,7 @@ public class DownloadManager {
     }
 
     private DownloadManager() {
-        mDownloadTasks = new HashMap<>();
+        mDownloadTasks = new ConcurrentHashMap<>();
     }
 
     /**
@@ -138,4 +141,6 @@ public class DownloadManager {
         }
         return result;
     }
+
+
 }
