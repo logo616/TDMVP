@@ -1,5 +1,7 @@
 package com.tdyh.android.base;
 
+import android.util.Log;
+
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 
@@ -9,11 +11,15 @@ import java.lang.ref.WeakReference;
 
 public  class BasePresenter<V extends BaseView>  implements Presenter<V> {
 
-    protected Reference<V> mViewRef;//View 接口类型的弱引用
+    private Reference<V> mViewRef;//View 接口类型的弱引用
 
     @Override
     public void attachView(V view) {
-        mViewRef = new WeakReference<V>(view);
+        if (mViewRef!=null && isViewAttached() && getView()==view){
+            Log.d("BasePresenter","attachView again");
+        }else {
+            mViewRef = new WeakReference<V>(view);
+        }
     }
 
     protected V getView() {
@@ -28,7 +34,7 @@ public  class BasePresenter<V extends BaseView>  implements Presenter<V> {
     public void detachView() {
         if (mViewRef != null) {
             mViewRef.clear();
-            mViewRef = null;
+            mViewRef=null;
         }
     }
 

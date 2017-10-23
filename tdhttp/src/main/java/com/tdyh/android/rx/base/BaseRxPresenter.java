@@ -13,7 +13,6 @@ import io.reactivex.disposables.Disposable;
 public class BaseRxPresenter<V extends BaseView> extends BasePresenter<V > implements PresenterRx {
 
 
-
     //以下下为配合RxJava2+retrofit2使用的
 
     //将所有正在处理的Subscription都添加到CompositeSubscription中。统一退出的时候注销观察
