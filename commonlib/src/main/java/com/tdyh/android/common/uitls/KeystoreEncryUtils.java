@@ -1,4 +1,4 @@
-package com.ktp.android.common.uitls;
+package com.tdyh.android.common.uitls;
 
 import android.content.Context;
 import android.os.Build;
@@ -26,6 +26,7 @@ import javax.security.auth.x500.X500Principal;
  * @author gzh
  * @date 2017/11/23 0023
  * 使用ksyStore加密工具类
+ *
  */
 
 public class KeystoreEncryUtils {
@@ -50,14 +51,14 @@ public class KeystoreEncryUtils {
 
     private void initKeyStore(String alias) {
         try {
-            keyStore = KeyStore.getInstance("AndroidKeyStore");
-            keyStore.load(null);
+            if (keyStore==null) {
+                keyStore = KeyStore.getInstance("AndroidKeyStore");
+                keyStore.load(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            createNewKeys(alias);
-        }
+        createNewKeys(alias);
     }
 
     private void createNewKeys(String alias) {
@@ -68,18 +69,19 @@ public class KeystoreEncryUtils {
                     Calendar start = Calendar.getInstance();
                     Calendar end = Calendar.getInstance();
                     end.add(Calendar.YEAR, 1);
-                    KeyPairGeneratorSpec spec = null;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        spec = new KeyPairGeneratorSpec.Builder(mContext)
-                                .setAlias(alias)
-                                .setSubject(new X500Principal("CN=Sample Name, O=Android Authority"))
-                                .setSerialNumber(BigInteger.ONE)
-                                .setStartDate(start.getTime())
-                                .setEndDate(end.getTime())
-                                .build();
-                    }
+
                     KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore");
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+
+                        KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(mContext)
+                                    .setAlias(alias)
+                                    .setSubject(new X500Principal("CN=Sample Name, O=Android Authority"))
+                                    .setSerialNumber(BigInteger.ONE)
+                                    .setStartDate(start.getTime())
+                                    .setEndDate(end.getTime())
+                                    .build();
+
                         generator.initialize(spec);
                     }
 
@@ -97,15 +99,15 @@ public class KeystoreEncryUtils {
     /**
      * 加密方法
      *
-     * @param needEncryptWord 　需要加密的字符串
+     * @param needEncryptWord 　需要加密的字符串,长度在256以下
      * @param alias           　加密秘钥
      * @return
      */
     public String encryptString(String needEncryptWord, String alias) {
         if (!TextUtils.isEmpty(alias) && !TextUtils.isEmpty(needEncryptWord)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                initKeyStore(alias);
-            }
+
+            initKeyStore(alias);
+
             String encryptStr = "";
             byte[] vals = null;
             try {
@@ -128,10 +130,12 @@ public class KeystoreEncryUtils {
                 cipherOutputStream.close();
 
                 vals = outputStream.toByteArray();
+
+                return  Base64.encodeToString(vals, Base64.DEFAULT);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return Base64.encodeToString(vals, Base64.DEFAULT);
         }
         return "";
     }
@@ -139,9 +143,8 @@ public class KeystoreEncryUtils {
 
     public String decryptString(String needDecryptWord, String alias) {
         if (!TextUtils.isEmpty(alias) && !TextUtils.isEmpty(needDecryptWord)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                initKeyStore(alias);
-            }
+            initKeyStore(alias);
+
             String decryptStr = "";
             try {
                 KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias, null);

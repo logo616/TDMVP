@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-          package="com.ktp.android.common.utils"
+          package="com.tdyh.android.common.utils"
 >
 
     <application android:allowBackup="false"
