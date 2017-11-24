@@ -1,5 +1,6 @@
 package com.tdyh.android.okhttp.multidownload;
 
+import com.tdyh.android.okhttp.OkHttpUtils;
 import com.tdyh.android.okhttp.https.HttpsUtils;
 import com.tdyh.android.okhttp.log.LoggerInterceptor;
 
@@ -29,7 +30,7 @@ public class OkHttpStack implements HttpStack {
             synchronized (OkHttpStack.class) {
                 if (mHttpClient == null) {
                     HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);//部分请求出现超时
-                    mHttpClient = new OkHttpClient().newBuilder()
+                    mHttpClient = OkHttpUtils.getInstance().getOkHttpClient().newBuilder()
                             .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                             .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                             .addInterceptor(new LoggerInterceptor("OkHttpStack", true))
