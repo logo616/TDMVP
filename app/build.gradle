@@ -22,17 +22,16 @@ android {
 dependencies {
     compile project(':mvplib')
     compile project(':tdhttp')
-
-
+    compile project(':commonlib')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:26.+'
-//    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    //    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    compile 'com.jakewharton:butterknife:5.1.1'
 }
