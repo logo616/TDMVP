@@ -1,4 +1,4 @@
-package com.tdyh.android.okhttp.multidownload;
+package com.tdyh.android.multidownload;
 
 import java.io.InputStream;
 

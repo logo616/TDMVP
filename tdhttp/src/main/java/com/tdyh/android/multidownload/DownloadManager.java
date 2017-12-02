@@ -1,4 +1,4 @@
-package com.tdyh.android.okhttp.multidownload;
+package com.tdyh.android.multidownload;
 
 import android.text.TextUtils;
 import android.util.Log;

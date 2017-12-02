@@ -1,4 +1,4 @@
-package com.tdyh.android.okhttp.multidownload;
+package com.tdyh.android.multidownload;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -261,6 +261,9 @@ public class DownloadTask implements Runnable {
                 int length;
                 int total = 0;// 记录本次下载文件的大小
 
+                long progressStartTime = System.currentTimeMillis();
+                long saveFileStartTime = System.currentTimeMillis();
+
                 while ((length = is.read(buffer)) > 0) {
                     if (cancel) {
                         //关闭资源
@@ -291,7 +294,21 @@ public class DownloadTask implements Runnable {
                     mCurrentDownStartIndex = finalStartIndex + total;
                     //发送进度消息
                     mProgress[threadId] = mCurrentDownStartIndex - startIndex;
-                    mHandler.sendEmptyMessage(MSG_PROGRESS);
+
+                    if (System.currentTimeMillis() - progressStartTime>1000) {
+                        progressStartTime=System.currentTimeMillis();
+
+                        mHandler.removeMessages(MSG_PROGRESS);
+                        mHandler.sendEmptyMessage(MSG_PROGRESS);//避免频繁更新主界面
+                    }
+
+                    //每隔10秒保存
+                    if (System.currentTimeMillis() - saveFileStartTime>10000) {
+                        saveFileStartTime=System.currentTimeMillis();
+                        saveToCacheAccessFile(mCurrentDownStartIndex);
+                    }
+
+
                 }
                 //关闭资源
                 close(cacheAccessFile, is);

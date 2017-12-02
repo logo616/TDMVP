@@ -1,4 +1,4 @@
-package com.tdyh.android.okhttp.multidownload;
+package com.tdyh.android.multidownload;
 
 import com.tdyh.android.okhttp.OkHttpUtils;
 import com.tdyh.android.okhttp.https.HttpsUtils;

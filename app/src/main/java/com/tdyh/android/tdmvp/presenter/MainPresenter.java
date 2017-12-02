@@ -4,8 +4,8 @@ import android.graphics.Canvas;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.tdyh.android.okhttp.multidownload.DownloadListner;
-import com.tdyh.android.okhttp.multidownload.DownloadManager;
+import com.tdyh.android.multidownload.DownloadListner;
+import com.tdyh.android.multidownload.DownloadManager;
 import com.tdyh.android.rx.base.BaseRxPresenter;
 import com.tdyh.android.tdmvp.contract.MainContract;
 import com.tdyh.android.tdmvp.model.LogModel;

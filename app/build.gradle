@@ -4,19 +4,82 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
-        applicationId "com.tdyh.android.tdmvp"
+        applicationId "com.tdyh.android.tdmvp.debug"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName   rootProject.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk{
+            abiFilters "armeabi","armeabi-v7a","x86"
+        }
+
+
     }
+
+ /*Apk 拆分机制 (abi ，density )
+ splits {
+        abi {
+            enable true
+            reset()
+            include  "armeabi", 'x86', 'armeabi-v7a'
+            universalApk true
+        }
+    }*/
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    externalNativeBuild {
+        // Encapsulates your CMake build configurations.
+        cmake {
+            // Provides a relative path to your CMake build script.
+            path "CMakeLists.txt"
+        }
+    }
+
+/*    sourceSets{
+        main{
+            jniLibs.srcDirs=['src/main/jni/','src/main/jni']
+        }
+    }*/
+
+
+    android.applicationVariants.all { variant ->
+//        variant.outputs.each//3.0 below
+
+
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+
+
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                println(outputFile.parent)
+                println(outputFile.name)
+                //这里修改apk文件名
+                if ("release".equals(buildType.name)) {
+                    def fileName = "app_${defaultConfig.versionCode}-${defaultConfig.versionName}-${buildType.name}-${releaseTime()}.apk"
+//                    output.outputFile //3.0 blow使用
+//                    output.outputFile= new File(outputFile.parent, fileName)
+                      output.outputFileName = fileName
+
+                } else if ("debug".equals(buildType.name)) {
+                    def fileName = "app_${buildType.name}-${releaseTime()}.apk"
+                    output.outputFileName = fileName
+                }
+            }
+        }
+    }
+
+}
+
+def releaseTime() {
+    return new Date().format("yyyyMMdd-HHmm")
 }
 
 dependencies {
@@ -33,5 +96,7 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    compile 'com.jakewharton:butterknife:5.1.1'
+    compile 'com.jakewharton:butterknife:8.8.1'
+//    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

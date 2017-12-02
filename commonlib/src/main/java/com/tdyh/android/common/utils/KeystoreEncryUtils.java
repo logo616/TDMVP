@@ -1,4 +1,4 @@
-package com.tdyh.android.common.uitls;
+package com.tdyh.android.common.utils;
 
 import android.content.Context;
 import android.os.Build;
@@ -25,7 +25,7 @@ import javax.security.auth.x500.X500Principal;
  *
  * @author gzh
  * @date 2017/11/23 0023
- * 使用ksyStore加密工具类
+ * 使用ksyStore加密工具类,不支持大数据
  *
  */
 

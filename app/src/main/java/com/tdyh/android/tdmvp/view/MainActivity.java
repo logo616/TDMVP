@@ -9,12 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.tdyh.android.common.uitls.AndroidKeyStoreRSAUtils;
-import com.tdyh.android.common.uitls.KeystoreEncryUtils;
 import com.tdyh.android.base.BaseActivity;
+import com.tdyh.android.common.utils.AndroidKeyStoreRSAUtils;
+import com.tdyh.android.common.utils.KeystoreEncryUtils;
 import com.tdyh.android.tdmvp.R;
 import com.tdyh.android.tdmvp.contract.MainContract;
 import com.tdyh.android.tdmvp.presenter.MainPresenter;
+import com.tdyh.android.tdmvp.utils.JNIUtils;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
@@ -22,19 +23,19 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.interfaces.RSAPublicKey;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter, MainContract.View> implements MainContract.View {
 
-    @InjectView(R.id.button)
+    @BindView(R.id.button)
     Button button;
-    @InjectView(R.id.btn_keystore_encry)
+    @BindView(R.id.btn_keystore_encry)
     Button btnKeystoreEncry;
-    @InjectView(R.id.btn_keystore_public_encry)
+    @BindView(R.id.btn_keystore_public_encry)
     Button btnKeystorePublicEncry;
-    @InjectView(R.id.btn_keystore_privatekey_decry)
+    @BindView(R.id.btn_keystore_privatekey_decry)
     Button btnKeystorePrivatekeyDecry;
 
 
@@ -42,7 +43,13 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
     @Override
     public void initialize() {
 
+        Log.d("TDMVP","sign:"+JNIUtils.getSignature(this));
+
+        String publicKey=JNIUtils.getPublicKey(this);
+        Toast.makeText(this,publicKey,Toast.LENGTH_SHORT).show();
     }
+
+
 
     private void buttonClick() {
 
@@ -99,7 +106,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.btn_keystore_public_encry)

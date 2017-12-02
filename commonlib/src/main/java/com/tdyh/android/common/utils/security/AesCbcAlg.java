@@ -1,4 +1,4 @@
-package com.tdyh.android.common.uitls.security;
+package com.tdyh.android.common.utils.security;
 
 import android.os.Build;
 import android.security.keystore.KeyGenParameterSpec;

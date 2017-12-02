@@ -1,4 +1,4 @@
-package com.tdyh.android.common.uitls;
+package com.tdyh.android.common.utils;
 
 import android.content.Context;
 import android.os.Build;
@@ -36,6 +36,7 @@ import javax.security.auth.x500.X500Principal;
 /**
  * @author gzh
  * @date 2017/11/24 0024
+ * 支持大数据分段加密
  */
  class SecurityConstants {
     public static final String KEYSTORE_PROVIDER_ANDROID_KEYSTORE = "AndroidKeyStore";
