@@ -4,7 +4,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
-        applicationId "com.tdyh.android.tdmvp.debug"
+        applicationId "com.tdyh.android.tdmvp"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
@@ -75,6 +75,8 @@ android {
             }
         }
     }
+
+
 
 }
 

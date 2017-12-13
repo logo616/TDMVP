@@ -9,7 +9,7 @@
 /**
  *这个key是和服务器之间通信的秘钥
  */
-const char* AUTH_KEY = "keyValue";
+const char* AUTH_KEY = "td123456";
 
 /**
  * 发布的app 签名,只有和本签名一致的app 才会返回 AUTH_KEY
@@ -32,8 +32,9 @@ JNIEXPORT jstring JNICALL Java_com_tdyh_android_tdmvp_utils_JNIUtils_getPublicKe
     jclass pm_clazz = env->GetObjectClass(pm_obj);
     // 得到 getPackageInfo 方法的 ID
     jmethodID package_info_id = env->GetMethodID(pm_clazz, "getPackageInfo","(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;");
-    jclass native_classs = env->GetObjectClass(contextObject);
-    jmethodID mId = env->GetMethodID(native_classs, "getPackageName", "()Ljava/lang/String;");
+    //jclass native_classs = env->GetObjectClass(contextObject);
+
+    jmethodID mId = env->GetMethodID(native_class, "getPackageName", "()Ljava/lang/String;");
     jstring pkg_str = static_cast<jstring>(env->CallObjectMethod(contextObject, mId));
     // 获得应用包的信息
     jobject pi_obj = env->CallObjectMethod(pm_obj, package_info_id, pkg_str, 64);
@@ -80,11 +81,11 @@ JNIEXPORT jstring JNICALL Java_com_tdyh_android_tdmvp_utils_JNIUtils_getPublicKe
         try {
             // 通过包管理器获得指定包名包含签名的包信息
             PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
-            //******* 通过返回的包信息获得签名数组
+            // 通过返回的包信息获得签名数组
             Signature[] signatures = packageInfo.signatures;
-            //******* 循环遍历签名数组拼接应用签名 *****
+            // 循环遍历签名数组拼接应用签名
             return signatures[0].toCharsString();
-            //************** 得到应用签名 *************
+            //得到应用签名
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
