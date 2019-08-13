@@ -1,5 +1,4 @@
-package com.tdyh.android.okhttp.multidownload;
-
+package com.tdyh.android.multidownload;
 
 
 public class FilePoint {
@@ -8,12 +7,11 @@ public class FilePoint {
     private String fileDir;//下载目录
 
     public FilePoint(String url) {
-        this.url = url;
+        this(url,null);
     }
 
-    public FilePoint(String fileDir, String url) {
-        this.fileDir = fileDir;
-        this.url = url;
+    public FilePoint(String url,String fileDir) {
+        this(url,fileDir,null);
     }
 
     public FilePoint(String url, String fileDir, String fileName) {

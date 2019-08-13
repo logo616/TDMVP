@@ -1,14 +1,13 @@
-package com.tdyh.android.okhttp.multidownload;
+package com.tdyh.android.multidownload;
 
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 下载管理器，断点续传
- *
  */
 public class DownloadManager {
 
@@ -16,6 +15,7 @@ public class DownloadManager {
     private Map<String, DownloadTask> mDownloadTasks;//文件下载任务索引，String为url,用来唯一区别并操作下载的文件
     private static DownloadManager mInstance;
     private static final String TAG = "DownloadManager";
+
     /**
      * 下载文件
      */
@@ -31,7 +31,7 @@ public class DownloadManager {
 
 
     // 获取下载文件的名称
-    public String getFileName(String url) {
+    private String getFileName(String url) {
         return url.substring(url.lastIndexOf("/") + 1);
     }
 
@@ -85,11 +85,15 @@ public class DownloadManager {
         if (TextUtils.isEmpty(fileName)) {
             fileName = getFileName(url);
         }
-        mDownloadTasks.put(url, new DownloadTask(new FilePoint(url, fileDir, fileName), l));
+        if (!mDownloadTasks.containsKey(url)) {
+            //防止重复添加
+            mDownloadTasks.put(url, new DownloadTask(new FilePoint(url, fileDir, fileName), l));
+        }
     }
 
     /**
      * 默认下载目录
+     *
      * @return
      */
     private String getDefaultDirectory() {
@@ -100,11 +104,11 @@ public class DownloadManager {
         return DEFAULT_FILE_DIR;
     }
 
-    public void setDefaultDirectory(String defaultDir){
+    public void setDefaultDirectory(String defaultDir) {
         if (TextUtils.isEmpty(this.DEFAULT_FILE_DIR)) {
             this.DEFAULT_FILE_DIR = defaultDir;
-        }else {
-            Log.e(TAG,"DEFAULT_FILE_DIR has exit");
+        } else {
+            Log.e(TAG, "DEFAULT_FILE_DIR has exit");
         }
     }
 
@@ -120,7 +124,7 @@ public class DownloadManager {
     }
 
     private DownloadManager() {
-        mDownloadTasks = new HashMap<>();
+        mDownloadTasks = new ConcurrentHashMap<>();
     }
 
     /**
@@ -138,4 +142,6 @@ public class DownloadManager {
         }
         return result;
     }
+
+
 }

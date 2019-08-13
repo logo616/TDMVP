@@ -3,6 +3,7 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
+
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
@@ -10,6 +11,7 @@ android {
         versionName   rootProject.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -20,31 +22,12 @@ android {
 }
 
 dependencies {
-    compile project(':mvplib')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:recyclerview-v7:26.+'
+
     testCompile 'junit:junit:4.12'
-    compile 'io.reactivex.rxjava2:rxjava:+'
-    compile 'io.reactivex.rxjava2:rxandroid:+'
-
-    //已经包含了ohttp，不需要再引进
-    compile 'com.squareup.retrofit2:retrofit:+'
-
-    //retrofit2添加gson支持，自动引入gosn库
-    compile 'com.squareup.retrofit2:converter-gson:+'
-
-//    retrofit2添加rxjava2支持
-    compile 'com.squareup.retrofit2:adapter-rxjava2:+'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-
-//    rxlifecycle
-    compile  'com.trello.rxlifecycle2:rxlifecycle:+'
-//    compile  'com.trello.rxlifecycle2:rxlifecycle-components:+'
-
-    compile 'org.greenrobot:eventbus:3.0.0'
-
-
 }

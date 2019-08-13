@@ -1,1 +1,1 @@
-include ':app', ':mvplib', ':tdhttp'
+include ':app', ':mvplib', ':tdhttp', ':commonlib'
