@@ -1,6 +1,5 @@
 package com.tdyh.android.base;
 
-import android.app.Activity;
 import android.app.LoaderManager;
 import android.app.ProgressDialog;
 import android.content.Loader;
@@ -21,6 +20,9 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V extends BaseVie
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //防止fragment.getActivity()为空
+        removeFragmentsState(savedInstanceState);
+
         super.onCreate(savedInstanceState);
         setContentView(getContentLayoutId());
         progressDialog = new ProgressDialog(this);
@@ -42,7 +44,18 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V extends BaseVie
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        removeFragmentsState(outState);
     }
+
+    private void removeFragmentsState(Bundle outState){
+        //不保存fragment状态，防止fragment.getActivity()为null
+        if(outState!=null){
+            String FRAGMENTS_TAG =  "android:support:fragments";
+            outState.remove(FRAGMENTS_TAG);
+        }
+    }
+
 
     @Override
     protected void onStart() {

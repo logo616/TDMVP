@@ -2,7 +2,6 @@ package com.tdyh.android.okhttp.multidownload;
 
 import android.util.Log;
 
-import com.tdyh.android.okhttp.OkHttpUtils;
 import com.tdyh.android.okhttp.https.HttpsUtils;
 import com.tdyh.android.okhttp.log.LoggerInterceptor;
 
@@ -17,7 +16,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
- * @author djcken
+ * @author
  * @date 2017/8/20
  */
 public class OkHttpStack implements HttpStack {

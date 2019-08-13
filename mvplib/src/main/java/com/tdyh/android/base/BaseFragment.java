@@ -46,7 +46,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         }
     }
 
-
     /**
      * 运行在onAttach之后
      * 可以接受别人传递过来的参数,实例化对象.

@@ -1,10 +1,9 @@
 package com.tdyh.android.okhttp.multidownload;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author djcken
+ * @author
  * @date 2017/8/20
  */
 public interface HttpStack {

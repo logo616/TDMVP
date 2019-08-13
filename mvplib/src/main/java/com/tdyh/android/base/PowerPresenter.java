@@ -10,6 +10,7 @@ import java.util.List;
 public class PowerPresenter <T extends BaseView> extends BasePresenter<T> {
 
     private List<Presenter> presenters = new ArrayList<>();
+
     @SafeVarargs
     public final <Q extends Presenter<T>> void requestPresenter(Q... cls){
         for (Q cl : cls) {

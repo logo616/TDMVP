@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 线程池管理
- * @author djcken
+ * @author
  * @date 2017/8/20
  */
 public class ThreadPoolManager {

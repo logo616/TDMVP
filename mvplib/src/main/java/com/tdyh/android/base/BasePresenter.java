@@ -1,5 +1,7 @@
 package com.tdyh.android.base;
 
+import android.support.annotation.Nullable;
+
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 
@@ -16,8 +18,9 @@ public  class BasePresenter<V extends BaseView>  implements Presenter<V> {
         mViewRef = new WeakReference<V>(view);
     }
 
+    @Nullable
     protected V getView() {
-        return mViewRef.get();
+        return mViewRef!=null?mViewRef.get():null;
     }
 
     public boolean isViewAttached() {
