@@ -45,7 +45,7 @@ public class DownloadTask implements Runnable {
     private final int MSG_FAIL = 5;//失败
     private DownloadListner mListner;//下载回调监听
 
-    private OkHttpStack mOkHttpLenStack;
+    private HttpStack mOkHttpLenStack;
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {

@@ -1,6 +1,5 @@
 package com.tdyh.android.multidownload;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 

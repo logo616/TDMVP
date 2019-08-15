@@ -12,10 +12,19 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk{
-            abiFilters "armeabi","armeabi-v7a","x86"
+//            abiFilters "armeabi","armeabi-v7a","x86"
+            abiFilters "armeabi-v7a"
+
         }
-
-
+        /*如果新建工程的时候，已经勾选了include C/C++ support，这里就已经生成了，可跳过。如果没有，可在app下的build.gradle如下添加。
+        在android下defaultConfig下添加：*/
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                //生成多个版本的so文件
+                abiFilters 'arm64-v8a','armeabi-v7a','x86','x86_64'
+            }
+        }
     }
 
  /*Apk 拆分机制 (abi ，density )
@@ -53,14 +62,16 @@ android {
     android.applicationVariants.all { variant ->
 //        variant.outputs.each//3.0 below
 
-
         variant.outputs.all { output ->
             def outputFile = output.outputFile
 
+            println(outputFile.name)
 
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 println(outputFile.parent)
                 println(outputFile.name)
+                println(buildType.name)
+
                 //这里修改apk文件名
                 if ("release".equals(buildType.name)) {
                     def fileName = "app_${defaultConfig.versionCode}-${defaultConfig.versionName}-${buildType.name}-${releaseTime()}.apk"
@@ -85,20 +96,33 @@ def releaseTime() {
 }
 
 dependencies {
-    compile project(':mvplib')
-    compile project(':tdhttp')
-    compile project(':commonlib')
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation project(':mvplib')
+    implementation project(':tdhttp')
+    implementation project(':commonlib')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
-    //    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    compile 'com.jakewharton:butterknife:8.8.1'
-//    compile 'com.jakewharton:butterknife:8.8.1'
+//    implementation 'com.android.support:appcompat-v7:26.+'
+    implementation rootProject.libsExt.SupportV7
+    //    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+//    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    //rxjava
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    //rxlifecycle
+    implementation  "com.trello.rxlifecycle2:rxlifecycle:$rxLifecycleVersion"
+
 }

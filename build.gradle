@@ -2,10 +2,15 @@
 
 buildscript {
     repositories {
-        jcenter()
+        google()
+//        jcenter()
+        maven{
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.3.2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -14,7 +19,12 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        google()
+//        jcenter()
+        maven{
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+
     }
 }
 
@@ -27,15 +37,20 @@ ext{
     minSdkVersion= 14
     targetSdkVersion= 26
     compileSdkVersion= 26
-    buildToolsVersion="26.0.2"
+    buildToolsVersion="28.0.3"
     versionName= "1.0.0"
     versionCode= 1
     //Dependencies
-    supportLibraryVersion= "25.2.0"
+    supportLibraryVersion= "26.1.0"
 
-    var = [
+    retrofitVersion="2.6.1"
+    rxJavaVersion="2.2.11"
+    rxAndroidVersion="2.1.1"
+    rxLifecycleVersion="2.2.2"
+
+    libsExt = [
             SupportV7 : "com.android.support:appcompat-v7:$supportLibraryVersion",
             SupportV4 : "com.android.support:support-v4:$supportLibraryVersion",
-            SupportRecyclerviewV7 : "com.android.support:recyclerview-v7:$supportLibraryVersion"
+            SupportRecyclerviewV7 : "com.android.support:recyclerview-v7:$supportLibraryVersion",
     ]
 }
