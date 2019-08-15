@@ -1,4 +1,4 @@
-package com.tdyh.android.tdmvp.utils;
+package com.tdyh.android.common.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -10,7 +10,7 @@ import android.content.pm.Signature;
  * @date 2017/11/29 0029
  */
 
-public class JNIUtils {
+public class SignUtils {
 
     static {
         System.loadLibrary("SignUtil");

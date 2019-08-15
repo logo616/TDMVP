@@ -12,7 +12,25 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        /*如果新建工程的时候，已经勾选了include C/C++ support，这里就已经生成了，可跳过。如果没有，可在app下的build.gradle如下添加。
+       在android下defaultConfig下添加：*/
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                //生成多个版本的so文件
+                abiFilters 'arm64-v8a','armeabi-v7a','x86','x86_64'
+            }
+        }
     }
+
+    externalNativeBuild {
+        // Encapsulates your CMake build configurations.
+        cmake {
+            // Provides a relative path to your CMake build script.
+            path "CMakeLists.txt"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

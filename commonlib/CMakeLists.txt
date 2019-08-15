@@ -34,7 +34,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/libs/${ANDROID_ABI})
 
 #当前cmakelists.txt所在目录的所有.c .cpp源文件
 #ADD_SUBDIRECTORY( src/main/jni/ )
-AUX_SOURCE_DIRECTORY(src/main/jni/ SRC_LIST)
+AUX_SOURCE_DIRECTORY(src/main/jni SRC_LIST)
 
 #增加其他目录的源文件到集合变量中
 #list(APPEND SRC_LIST

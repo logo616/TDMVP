@@ -2,17 +2,17 @@
 #include <jni.h>
 /* Header for class com_tdyh_android_tdmvp_utils_JNIUtils */
 
-#ifndef _Included_com_tdyh_android_tdmvp_utils_JNIUtils
-#define _Included_com_tdyh_android_tdmvp_utils_JNIUtils
+#ifndef _Included_com_tdyh_android_common_utils_SignUtils
+#define _Included_com_tdyh_android_common_utils_SignUtils
 #ifdef __cplusplus
 extern "C" {
 #endif
 /*
- * Class:     com_tdyh_android_tdmvp_utils_JNIUtils
+ * Class:     com_tdyh_android_common_utils_SignUtils
  * Method:    getPublicKey
  * Signature: (Ljava/lang/Object;)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_com_tdyh_android_tdmvp_utils_JNIUtils_getPublicKey
+JNIEXPORT jstring JNICALL Java_com_tdyh_android_common_utils_SignUtils_getPublicKey
   (JNIEnv *, jclass, jobject);
 
 #ifdef __cplusplus

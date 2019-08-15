@@ -15,7 +15,7 @@ import com.tdyh.android.common.utils.KeystoreEncryUtils;
 import com.tdyh.android.tdmvp.R;
 import com.tdyh.android.tdmvp.contract.MainContract;
 import com.tdyh.android.tdmvp.presenter.MainPresenter;
-import com.tdyh.android.tdmvp.utils.JNIUtils;
+import com.tdyh.android.common.utils.SignUtils;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
@@ -43,9 +43,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
     @Override
     public void initialize() {
 
-        Log.d("TDMVP","sign:"+JNIUtils.getSignature(this));
+        Log.d("TDMVP","sign:"+ SignUtils.getSignature(this));
 
-        String publicKey=JNIUtils.getPublicKey(this);
+        String publicKey= SignUtils.getPublicKey(this);
         Toast.makeText(this,publicKey,Toast.LENGTH_SHORT).show();
     }
 
