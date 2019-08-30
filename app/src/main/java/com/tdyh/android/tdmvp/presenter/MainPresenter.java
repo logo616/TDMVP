@@ -7,8 +7,11 @@ import android.widget.Toast;
 import com.tdyh.android.multidownload.DownloadListner;
 import com.tdyh.android.multidownload.DownloadManager;
 import com.tdyh.android.rx.base.BaseRxPresenter;
+import com.tdyh.android.tdmvp.bean.A20011222;
 import com.tdyh.android.tdmvp.contract.MainContract;
 import com.tdyh.android.tdmvp.model.LogModel;
+
+import io.reactivex.Observable;
 
 
 /**
@@ -102,6 +105,11 @@ public class MainPresenter extends BaseRxPresenter<MainContract.View> implements
             }
         });
         DownloadManager.getInstance().download(url);
+    }
+
+    public void testSend(A20011222 bean){
+
+
     }
 
 

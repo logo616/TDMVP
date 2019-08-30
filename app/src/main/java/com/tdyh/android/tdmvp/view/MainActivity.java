@@ -12,20 +12,27 @@ import android.widget.Toast;
 import com.tdyh.android.base.BaseActivity;
 import com.tdyh.android.common.utils.AndroidKeyStoreRSAUtils;
 import com.tdyh.android.common.utils.KeystoreEncryUtils;
+import com.tdyh.android.common.utils.SignUtils;
 import com.tdyh.android.tdmvp.R;
+import com.tdyh.android.tdmvp.bean.A20011222;
+import com.tdyh.android.tdmvp.bean.UserInfo;
 import com.tdyh.android.tdmvp.contract.MainContract;
 import com.tdyh.android.tdmvp.presenter.MainPresenter;
-import com.tdyh.android.common.utils.SignUtils;
+import com.tdyh.android.tdmvp.utils.HttpUtls;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.interfaces.RSAPublicKey;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends BaseActivity<MainPresenter, MainContract.View> implements MainContract.View {
 
@@ -47,8 +54,37 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
 
         String publicKey= SignUtils.getPublicKey(this);
         Toast.makeText(this,publicKey,Toast.LENGTH_SHORT).show();
+        sendData();
     }
 
+    private void sendData() {
+        A20011222 param=new A20011222();
+        param.setTextCode("A20011222");
+
+        Observable<List<UserInfo>> observable = HttpUtls.sendPost(param,UserInfo.class);
+
+        observable.subscribe(new Observer<List<UserInfo>>() {
+            @Override
+            public void onSubscribe(Disposable disposable) {
+
+            }
+
+            @Override
+            public void onNext(List<UserInfo> userInfo) {
+                Log.e("Gao","userInfo=="+userInfo);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                Log.e("Gao",throwable.toString());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
 
 
     private void buttonClick() {
@@ -85,7 +121,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
                 buttonClick();
                 break;
             case R.id.btn_keystore_encry:
-                keystoreEncry();
+//                keystoreEncry();
+
+                sendData();
                 break;
         }
     }

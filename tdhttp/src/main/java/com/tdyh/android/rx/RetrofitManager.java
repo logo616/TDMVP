@@ -18,6 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by dugang on 2017/3/15.Retrofit管理类
@@ -76,6 +77,7 @@ public class RetrofitManager {
                     retrofitBuilder.baseUrl(getBaseUrl());
                     retrofitBuilder.client(okHttpClient);
                     retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+                    retrofitBuilder.addConverterFactory(ScalarsConverterFactory.create());
                     retrofitBuilder.addConverterFactory(GsonConverterFactory.create());
                     INSTENCE = retrofitBuilder.build();
                 }
@@ -93,6 +95,7 @@ public class RetrofitManager {
             retrofitBuilder.baseUrl(baseUrl);
             retrofitBuilder.client(okHttpClient);
             retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+            retrofitBuilder.addConverterFactory(ScalarsConverterFactory.create());
             retrofitBuilder.addConverterFactory(GsonConverterFactory.create());
 
             return  retrofitBuilder.build();

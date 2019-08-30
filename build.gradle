@@ -20,7 +20,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-//        jcenter()
+        jcenter()
         maven{
             url 'http://maven.aliyun.com/nexus/content/groups/public/'
         }
@@ -35,8 +35,8 @@ task clean(type: Delete) {
 ext{
 
     minSdkVersion= 14
-    targetSdkVersion= 26
-    compileSdkVersion= 26
+    targetSdkVersion= 28
+    compileSdkVersion= 28
     buildToolsVersion="28.0.3"
     versionName= "1.0.0"
     versionCode= 1

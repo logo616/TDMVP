@@ -1,8 +1,7 @@
 package com.tdyh.android.base;
 
-import android.util.Log;
-
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
@@ -39,6 +38,7 @@ public  class BasePresenter<V extends BaseView>  implements Presenter<V> {
             mViewRef.clear();
             mViewRef = null;
         }
+
     }
 
     /**
